@@ -1,33 +1,49 @@
 
 import random
 
-ord = ["bord", "målare", "tavla",]
-ordet = random.choice(ord,).lower()
+ordlista = ["bord", "målare", "tavla"]
+word = random.choice(ordlista).lower()
 
-play_word = list(ordet)
-Gissade_bokstäver = ["_"] * len(ordet)
+play_word = list(word)
+guessed_word = ["_"] * len(word)
+used_letters = []
 
 fel = 0
 max_fel = 6
 
 print("Välkommen till hänge gubbe")
-print("Ordet har", enumerate(play_word), "bokstäver")
+print("Ordet har", len(play_word), "bokstäver")
 
 
-for i, bokstav in enumerate(play_word): 
-     if "t" == bokstav:
-        print("hittade: t")
-        Gissade_bokstäver[i] = "t"
+while fel < max_fel and "_" in guessed_word:
+    print("\ordet:", "".join(guessed_word))
+    print("gissade bokstäver:", ", ".join(used_letters))
 
 
+try:
+     guess = input("Gissa ditt ord").lower()
 
-while fel < max_fel:
+     if len(guess) != 1:
+        raise ValueError("du måste gissa en bokstav")
+
+except ValueError as f:
+    print("fel", f)
+        
 
 
-    gissning = input("Gissa ditt ord").lower()
+if guess in play_word:
+    for i, letter in enumerate(play_word):
+        if letter == guess:
+                    guessed_word[i] = guess
+        print("Rätt!")
+
+
+    
    
-    if gissning == play_word:
+    if guess == word:
         print("Du vann")
+        break
+        
     
     else:
         fel += 1
